@@ -1,4 +1,7 @@
-export const BASE_URL = ['https://back.nomoredomainswork.ru/api', 'https://front.nomoredomainswork.ru'];
+export const BASE_URL = [
+  'https://back.nomoredomainswork.ru/api',
+ 'https://front.nomoredomainswork.ru'
+];
 
 export const endpoints = {
   games: `${BASE_URL}/games`,
