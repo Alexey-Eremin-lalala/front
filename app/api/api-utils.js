@@ -38,9 +38,7 @@ export const getNormalizedGameDataById = async (url, id) => {
 export const getNormalizedGamesDataByCategory = async (url, category) => {
   try {
     const data = await getData(`${url}?categories.name=${category}`);
-    if (!data.length) {
-      throw new Error("Нет игр в категории");
-    }
+    console.log(data);
     return isResponseOk(data) ? normalizeData(data) : data;
   } catch (error) {
     return error;
@@ -63,6 +61,7 @@ export const authorize = async (url, data) => {
     return error;
   }
 };
+
 export const setJWT = (jwt) => {
   document.cookie = `jwt=${jwt}`;
   localStorage.setItem("jwt", jwt);

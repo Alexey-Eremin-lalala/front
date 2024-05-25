@@ -29,8 +29,8 @@ export const CardsSlider = (props) => {
         450: {
           loop: true,
           spaceBetween: 20,
-          slidesPerView: "auto",
           allowTouchMove: false,
+          slidesPerView: "auto",
           speed: 6500,
           autoplay: {
             enabled: true,
@@ -45,22 +45,21 @@ export const CardsSlider = (props) => {
     };
     new Swiper(".swiper", options);
   }, []);
+  console.log("Ошибка:", props.data); /////Вот
   return (
-    <>
-      <div className={`swiper ${Styles["slider"]}`}>
-        <ul className={`swiper-wrapper ${Styles["slider-wrapper"]}`}>
-          {props.data.map((item, i) => {
-            return (
-              <li className={`swiper-slide ${Styles["slide"]}`} key={i}>
-                <Link href={`/games/${item.id}`}>
-                  <Card {...item} />
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        <div className={`swiper-pagination ${Styles["pagination"]}`}></div>
-      </div>
-    </>
+    <div className={`swiper ${Styles["slider"]}`}>
+      <ul className={`swiper-wrapper ${Styles["slider-wrapper"]}`}>
+        {props.data.map((item, i) => {
+          return (
+            <li className={`swiper-slide ${Styles["slide"]}`} key={i}>
+              <Link href={`/games/${item.id}`}>
+                <Card {...item} />
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+      <div className={`swiper-pagination ${Styles["pagination"]}`}></div>
+    </div>
   );
-}; 
+};
