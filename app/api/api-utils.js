@@ -1,5 +1,4 @@
-
-const getData = async (url) => {
+export const getData = async (url) => {
   try {
     const response = await fetch(url);
     if (response.status !== 200) {
@@ -9,25 +8,27 @@ const getData = async (url) => {
     return data;
   } catch (error) {
     return error;
-  };
-}
+  }
+};
+
+export const isResponseOk = (response) => {
+  return !(response instanceof Error);
+};
 
 const normalizeDataObject = (obj) => {
-  let str = JSON.stringify(obj)
+  let str = JSON.stringify(obj);
 
-  str = str.replaceAll('_id', 'id');
-  const newObj = JSON.parse(str)
-  const result = { ...newObj, category: newObj.categories }
+  str = str.replaceAll("_id", "id");
+  const newObj = JSON.parse(str);
+  const result = { ...newObj, category: newObj.categories };
   return result;
-}
+};
 
 export const normalizeData = (data) => {
   return data.map((item) => {
-    return normalizeDataObject(item)
-  })
-}
-
-
+    return normalizeDataObject(item);
+  });
+};
 
 export const getNormalizedGameDataById = async (url, id) => {
   const data = await getData(`${url}/${id}`);
@@ -35,18 +36,20 @@ export const getNormalizedGameDataById = async (url, id) => {
 };
 
 export const getNormalizedGamesDataByCategory = async (url, category) => {
-  const data = await getData(`${url}?categories.name=${category}`);
-  return isResponseOk(data) ? normalizeData(data) : data;
-};
-
-export const isResponseOk = (response) => {
-  return !(response instanceof Error);
+  try {
+    const data = await getData(`${url}?categories.name=${category}`);
+    if (!data.length) {
+      throw new Error("Нет игр в категории");
+    }
+    return isResponseOk(data) ? normalizeData(data) : data;
+  } catch (error) {
+    return error;
+  }
 };
 
 export const authorize = async (url, data) => {
   try {
     const response = await fetch(url, {
-
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
@@ -59,6 +62,23 @@ export const authorize = async (url, data) => {
   } catch (error) {
     return error;
   }
+};
+export const setJWT = (jwt) => {
+  document.cookie = `jwt=${jwt}`;
+  localStorage.setItem("jwt", jwt);
+};
+
+export const getJWT = () => {
+  if (document.cookie === "") {
+    return localStorage.getItem("jwt");
+  }
+  const jwt = document.cookie.split(";").find((item) => item.includes("jwt"));
+  return jwt ? jwt.split("=")[1] : null;
+};
+
+export const removeJWT = () => {
+  document.cookie = "jwt=;";
+  localStorage.removeItem("jwt");
 };
 
 export const getMe = async (url, jwt) => {
@@ -77,18 +97,6 @@ export const getMe = async (url, jwt) => {
   }
 };
 
-export const setJWT = (jwt) => {
-  localStorage.setItem("jwt", jwt);
-};
-
-export const getJWT = () => {
-  return localStorage.getItem("jwt");
-};
-
-export const removeJWT = () => {
-  localStorage.removeItem("jwt");
-};
-
 export const checkIfUserVoted = (game, userId) => {
   return game.users.find((user) => user.id === userId);
 };
@@ -96,19 +104,19 @@ export const checkIfUserVoted = (game, userId) => {
 export const vote = async (url, jwt, usersArray) => {
   try {
     const response = await fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${jwt}`,
       },
-      body: JSON.stringify({ users: usersArray })
-    })
+      body: JSON.stringify({ users: usersArray }),
+    });
     if (response.status !== 200) {
-      throw new Error('Ошибка голосования')
+      throw new Error("Ошибка голосования");
     }
-    const result = await response.json()
-    return result
+    const result = await response.json();
+    return result;
   } catch (error) {
-    return error
+    return error;
   }
-} 
+};
