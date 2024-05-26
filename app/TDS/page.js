@@ -7,7 +7,7 @@ export default function New() {
     const TDSGames = useGetDataByCategory(endpoints.games, 'TDS')
     return (
         <main className='main'>
-            {TDSGames ? (<CardsListSection data={TDSGames} id='TDS' title='ТДС' />) : (<Preloader />)}
+            {TDSGames ? (<CardsListSection data={TDSGames} id='tds' title='ТДС' />) : (<Preloader />)}
         </main>
     )
     
