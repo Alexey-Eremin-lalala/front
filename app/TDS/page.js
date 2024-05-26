@@ -6,8 +6,8 @@ import { Preloader } from "../components/Preloader/Preloader";
 export default function New() {
     const TDSGames = useGetDataByCategory(endpoints.games, 'TDS')
     return (
-        <main className='main'>
-            {TDSGames ? (<CardsListSection data={TDSGames} id='tds' title='ТДС' />) : (<Preloader />)}
+        <main className='main-inner'>
+            {TDSGames ? (<CardsListSection data={TDSGames} id='TDS' title='TDS' />) : (<Preloader />)}
         </main>
     )
     
