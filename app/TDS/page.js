@@ -9,5 +9,6 @@ export default function New() {
         <main className='main'>
             {TDSGames ? (<CardsListSection data={TDSGames} id='TDS' title='ТДС' />) : (<Preloader />)}
         </main>
+    )
     
 }
