@@ -1,1 +1,1 @@
-мой бэк: https://back.nomoredomainswork.r
+мой бэк: https://back.nomoredomainswork.ru
