@@ -1,1 +1,1 @@
-мой бэк: https://github.com/Alexey-Eremin-lalala/6th-week.git
+мой бэк: https://back.nomoredomainswork.ru
